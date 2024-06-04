@@ -3,7 +3,10 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QStackedWidget>
 #include <QLabel>
+#include <QPushButton>
+#include <QLineEdit>
 #include "TransactionModel.h"
 #include "RowView.h"
 
@@ -14,8 +17,19 @@ public:
 
 private:
     TransactionModel *model;
-    QVBoxLayout *layout;
+    QStackedWidget *stackedWidget;
+    QWidget *mainView;
+    QWidget *addTransactionView;
     QLabel *totalLabel;
+    QPushButton *addButton;
+    QPushButton *backButton;
+    QLineEdit *titleInput;
+    QLineEdit *amountInput;
+
+    void setupUI();
+    void addTransaction();
+    void showAddTransactionView();
+    void showMainView();
 
 private slots:
     void updateTotal(double total);
