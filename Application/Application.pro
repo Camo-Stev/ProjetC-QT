@@ -9,14 +9,17 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    main.cpp \
-    application.cpp
+    CompteView.cpp \
+    RowView.cpp \
+    main.cpp
 
 HEADERS += \
-    application.h
+    CompteView.h \
+    RowView.h \
+    TableView.h \
+    TransactionModel.h
 
-FORMS += \
-    application.ui
+FORMS +=
 
 TRANSLATIONS += \
     Application_fr_FR.ts
