@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     CompteView.cpp \
     RowView.cpp \
+    TransactionModel.cpp \
     main.cpp
 
 HEADERS += \

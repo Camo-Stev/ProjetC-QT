@@ -13,27 +13,11 @@ struct Transaction {
 class TransactionModel : public QObject {
     Q_OBJECT
 public:
-    explicit TransactionModel(QObject *parent = nullptr) : QObject(parent) {
-        // Exemple d'initialisation avec des données de test
-        addTransaction("Achat de café", -3.50);
-        addTransaction("Paiement reçu", 250.00);
-        addTransaction("Location de voiture", -100.00);
-    }
+    explicit TransactionModel(QObject *parent = nullptr);
 
-    const QVector<Transaction>& getTransactions() const { return transactions; }
-    double getTotalAmount() const {
-        double total = 0;
-        for (const auto &transaction : transactions) {
-            total += transaction.amount;
-        }
-        return total;
-    }
-
-    void addTransaction(const QString &title, double amount) {
-        transactions.append({title, amount});
-        emit transactionsUpdated();
-        emit totalUpdated(getTotalAmount());
-    }
+    const QVector<Transaction>& getTransactions() const;
+    void addTransaction(const QString &title, double amount);
+    double getTotalAmount() const;  // Rendu public pour accès direct
 
 signals:
     void transactionsUpdated();

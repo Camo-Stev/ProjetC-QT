@@ -2,14 +2,14 @@
 
 RowView::RowView(const QString &title, double amount, QWidget *parent) : QWidget(parent) {
     titleLabel = new QLabel(title, this);
-    amountLabel = new QLabel(QString::number(amount, 'f', 2) + " €", this); // Format the amount with two decimals and append Euro symbol
+    amountLabel = new QLabel(QString::number(amount, 'f', 2) + " €", this);
 
-    // Setup layout
     QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->addWidget(titleLabel);
-    layout->addWidget(amountLabel);
+    layout->addWidget(titleLabel,1);
+    layout->addWidget(amountLabel,0, Qt::AlignRight);
 
-    // Optional: add styling or further configuration
     titleLabel->setStyleSheet("font-weight: bold;");
     amountLabel->setAlignment(Qt::AlignRight);
+
+    setLayout(layout);
 }

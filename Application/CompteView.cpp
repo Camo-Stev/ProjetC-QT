@@ -1,7 +1,5 @@
 #include "CompteView.h"
-#include <QInputDialog>
 
-<<<<<<< HEAD
 CompteView::CompteView(QWidget *parent) : QWidget(parent), model(new TransactionModel(this)) {
     stackedWidget = new QStackedWidget(this);
     setupUI();
@@ -12,39 +10,24 @@ CompteView::CompteView(QWidget *parent) : QWidget(parent), model(new Transaction
 void CompteView::setupUI() {
     mainView = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainView);
+
     totalLabel = new QLabel("Total: 0 €", mainView);
     totalLabel->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(totalLabel);
+    mainLayout->addWidget(totalLabel);  // Add the totalLabel first to ensure it is at the top
 
     addButton = new QPushButton("Ajout", mainView);
     mainLayout->addWidget(addButton);
     connect(addButton, &QPushButton::clicked, this, &CompteView::showAddTransactionView);
-=======
-CompteView::CompteView(QWidget *parent) : QWidget(parent) {
-    model = new TransactionModel(this);
-    layout = new QVBoxLayout(this);
-    setupUI();
-    updateTotal(model->getTotalAmount());
 
-    connect(model, &TransactionModel::totalUpdated, this, &CompteView::updateTotal);
-    connect(addButton, &QPushButton::clicked, this, &CompteView::showAddTransactionDialog);
-}
-
-void CompteView::setupUI() {
-    totalLabel = new QLabel("Total: 0 €", this);
-    totalLabel->setAlignment(Qt::AlignCenter);
-    layout->addWidget(totalLabel);
-
-    addButton = new QPushButton("+", this);
-    addButton->setFixedSize(24, 24); // Small button size for the '+' symbol
-    layout->addWidget(addButton);
->>>>>>> 5360e20306600242a04a2da1b56525fc8767a6e1
-
-    auto transactions = model->getTransactions();
-    for (const auto &transaction : transactions) {
-        mainLayout->addWidget(new RowView(transaction.title, transaction.amount));
+    // Add each RowView for existing transactions
+    for (const auto &transaction : model->getTransactions()) {
+        RowView *row = new RowView(transaction.title, transaction.amount);
+        mainLayout->addWidget(row);
     }
-<<<<<<< HEAD
+
+    // Spacer to push everything up
+    QSpacerItem* verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    mainLayout->addSpacerItem(verticalSpacer);
 
     addTransactionView = new QWidget(this);
     QVBoxLayout *addLayout = new QVBoxLayout(addTransactionView);
@@ -70,6 +53,7 @@ void CompteView::setupUI() {
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(stackedWidget);
+    setLayout(layout);
 }
 
 void CompteView::showAddTransactionView() {
@@ -84,25 +68,14 @@ void CompteView::addTransaction() {
     QString title = titleInput->text();
     double amount = amountInput->text().toDouble();
     model->addTransaction(title, amount);
-    mainView->layout()->addWidget(new RowView(title, amount));
-    updateTotal(model->getTotalAmount());
-    showMainView();
-=======
->>>>>>> 5360e20306600242a04a2da1b56525fc8767a6e1
+    mainView->layout()->addWidget(new RowView(title, amount));  // Add the new RowView at the end of the list
+    updateTotal(model->getTotalAmount());  // Update the total
+    showMainView();  // Return to the main view
+
+    titleInput->clear();
+    amountInput->clear();
 }
 
 void CompteView::updateTotal(double total) {
     totalLabel->setText("Total: " + QString::number(total, 'f', 2) + " €");
-}
-
-void CompteView::showAddTransactionDialog() {
-    bool ok;
-    QString title = QInputDialog::getText(this, "New Transaction", "Enter transaction title:", QLineEdit::Normal, "", &ok);
-    if (!ok) return; // The user canceled the dialog
-
-    double amount = QInputDialog::getDouble(this, "New Transaction", "Enter amount (use negative for expenses):", 0, -1e6, 1e6, 2, &ok);
-    if (!ok) return; // The user canceled the dialog
-
-    model->addTransaction(title, amount);
-    layout->addWidget(new RowView(title, amount));
 }

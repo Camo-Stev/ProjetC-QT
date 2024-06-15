@@ -13,6 +13,7 @@ public:
 private:
     QLabel *titleLabel;
     QLabel *amountLabel;
+    QHBoxLayout *layout;
 };
 
 #endif // ROWVIEW_H
