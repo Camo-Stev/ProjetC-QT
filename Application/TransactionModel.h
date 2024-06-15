@@ -6,11 +6,14 @@
 #include <QString>
 #include <QDate>
 
+
 struct Transaction {
     QString title;
     double amount;
     QDate date;
 };
+
+
 
 class TransactionModel : public QObject {
     Q_OBJECT

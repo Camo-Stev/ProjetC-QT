@@ -17,3 +17,4 @@ RowView::RowView(const QString &title, double amount, const QString &dateText, Q
     mainLayout->setSpacing(20);
     setLayout(mainLayout);
 }
+

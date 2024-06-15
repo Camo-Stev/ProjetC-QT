@@ -1,4 +1,5 @@
 #include "CompteView.h"
+#include <QFrame>
 
 CompteView::CompteView(QWidget *parent) : QWidget(parent), model(new TransactionModel(this)) {
     stackedWidget = new QStackedWidget(this);
@@ -19,9 +20,11 @@ void CompteView::setupUI() {
     mainLayout->addWidget(addButton);
     connect(addButton, &QPushButton::clicked, this, &CompteView::showAddTransactionView);
 
+
     for (const auto &transaction : model->getTransactions()) {
         RowView *row = new RowView(transaction.title, transaction.amount, transaction.date.toString("dd/MM/yyyy"));
         mainLayout->addWidget(row);
+        separator->setFrameShape(QFrame::HLine);
     }
 
     addTransactionView = new QWidget(this);
@@ -80,3 +83,4 @@ void CompteView::addTransaction() {
 void CompteView::updateTotal(double total) {
     totalLabel->setText("Total: " + QString::number(total, 'f', 2) + " €");
 }
+

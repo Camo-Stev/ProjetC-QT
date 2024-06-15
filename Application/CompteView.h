@@ -29,6 +29,7 @@ private:
     QLineEdit *amountInput;
     QDateEdit *dateInput;
 
+
 private slots:
     void showAddTransactionView();
     void showMainView();
