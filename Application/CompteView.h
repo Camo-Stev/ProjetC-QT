@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QDateEdit>
 #include "TransactionModel.h"
 #include "RowView.h"
 
@@ -14,6 +15,7 @@ class CompteView : public QWidget {
     Q_OBJECT
 public:
     explicit CompteView(QWidget *parent = nullptr);
+    void setupUI();
 
 private:
     TransactionModel *model;
@@ -25,13 +27,12 @@ private:
     QPushButton *backButton;
     QLineEdit *titleInput;
     QLineEdit *amountInput;
-
-    void setupUI();
-    void addTransaction();
-    void showAddTransactionView();
-    void showMainView();
+    QDateEdit *dateInput;
 
 private slots:
+    void showAddTransactionView();
+    void showMainView();
+    void addTransaction();
     void updateTotal(double total);
 };
 

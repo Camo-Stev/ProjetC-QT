@@ -4,16 +4,16 @@
 #include <QWidget>
 #include <QLabel>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 
 class RowView : public QWidget {
     Q_OBJECT
 public:
-    explicit RowView(const QString &title, double amount, QWidget *parent = nullptr);
+    RowView(const QString &title, double amount, const QString &dateText, QWidget *parent = nullptr);
 
 private:
     QLabel *titleLabel;
     QLabel *amountLabel;
-    QHBoxLayout *layout;
 };
 
 #endif // ROWVIEW_H

@@ -13,21 +13,16 @@ void CompteView::setupUI() {
 
     totalLabel = new QLabel("Total: 0 €", mainView);
     totalLabel->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(totalLabel);  // Add the totalLabel first to ensure it is at the top
+    mainLayout->addWidget(totalLabel);
 
     addButton = new QPushButton("Ajout", mainView);
     mainLayout->addWidget(addButton);
     connect(addButton, &QPushButton::clicked, this, &CompteView::showAddTransactionView);
 
-    // Add each RowView for existing transactions
     for (const auto &transaction : model->getTransactions()) {
-        RowView *row = new RowView(transaction.title, transaction.amount);
+        RowView *row = new RowView(transaction.title, transaction.amount, transaction.date.toString("dd/MM/yyyy"));
         mainLayout->addWidget(row);
     }
-
-    // Spacer to push everything up
-    QSpacerItem* verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    mainLayout->addSpacerItem(verticalSpacer);
 
     addTransactionView = new QWidget(this);
     QVBoxLayout *addLayout = new QVBoxLayout(addTransactionView);
@@ -38,6 +33,10 @@ void CompteView::setupUI() {
     amountInput = new QLineEdit(addTransactionView);
     amountInput->setPlaceholderText("Enter amount (use negative for expenses)");
     addLayout->addWidget(amountInput);
+
+    dateInput = new QDateEdit(QDate::currentDate(), addTransactionView);
+    dateInput->setDisplayFormat("dd/MM/yyyy");
+    addLayout->addWidget(dateInput);
 
     QPushButton *saveButton = new QPushButton("Save", addTransactionView);
     connect(saveButton, &QPushButton::clicked, this, &CompteView::addTransaction);
@@ -67,13 +66,15 @@ void CompteView::showMainView() {
 void CompteView::addTransaction() {
     QString title = titleInput->text();
     double amount = amountInput->text().toDouble();
-    model->addTransaction(title, amount);
-    mainView->layout()->addWidget(new RowView(title, amount));  // Add the new RowView at the end of the list
-    updateTotal(model->getTotalAmount());  // Update the total
-    showMainView();  // Return to the main view
+    QDate date = dateInput->date();
+    model->addTransaction(title, amount, date);
+    mainView->layout()->addWidget(new RowView(title, amount, date.toString("dd/MM/yyyy")));
+    updateTotal(model->getTotalAmount());
+    showMainView();
 
     titleInput->clear();
     amountInput->clear();
+    dateInput->setDate(QDate::currentDate());
 }
 
 void CompteView::updateTotal(double total) {
