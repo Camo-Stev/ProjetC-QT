@@ -4,7 +4,7 @@ TransactionManager::TransactionManager(QObject *parent) : QObject(parent) {}
 
 void TransactionManager::addTransaction(const Transaction& transaction) {
     transactions.append(transaction);
-    emit transactionsUpdated();  // Émettre le signal ici
+    emit transactionsUpdated();
 }
 
 const QList<Transaction>& TransactionManager::getTransactions() const {

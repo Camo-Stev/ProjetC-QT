@@ -13,7 +13,6 @@ void CompteView::setupUI() {
     mainView = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainView);
 
-    // Bouton d'information placé en haut à droite
     QHBoxLayout *infoLayout = new QHBoxLayout();
     QPushButton *infoButton = new QPushButton("i");
     infoButton->setStyleSheet("font-weight: bold; font-size: 16px; width: 25px; height: 25px; border-radius: 12.5px; border: 1px solid black;");

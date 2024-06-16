@@ -1,7 +1,6 @@
 #include "TransactionModel.h"
 
 TransactionModel::TransactionModel(QObject *parent) : QObject(parent) {
-    // Initial transactions can be setup here if needed
 }
 
 void TransactionModel::addTransaction(const QString &title, double amount, const QDate &date) {
