@@ -3,8 +3,9 @@
 
 CompteView::CompteView(QWidget *parent) : QWidget(parent), model(new TransactionModel(this)) {
     stackedWidget = new QStackedWidget(this);
-    setupUI();
 
+    setupUI();
+    initializeDefaultTransactions();
     connect(model, &TransactionModel::totalUpdated, this, &CompteView::updateTotal);
 }
 
@@ -81,5 +82,22 @@ void CompteView::addTransaction() {
 
 void CompteView::updateTotal(double total) {
     totalLabel->setText("Total: " + QString::number(total, 'f', 2) + " €");
+}
+
+
+void CompteView::initializeDefaultTransactions() {
+    model->addTransaction("Loyer", -1200.00, QDate(2024, 1, 1));
+    model->addTransaction("Salaire", 2500.00, QDate(2024, 1, 5));
+    model->addTransaction("Achat ordinateur", -800.00, QDate(2024, 1, 10));
+
+    updateTotal(model->getTotalAmount());
+
+    for (const auto &transaction : model->getTransactions()) {
+        RowView *row = new RowView(transaction.title, transaction.amount, transaction.date.toString("dd/MM/yyyy"));
+        QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(mainView->layout());
+        if (layout) {
+            layout->addWidget(row);
+        }
+    }
 }
 

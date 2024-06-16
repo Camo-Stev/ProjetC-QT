@@ -21,3 +21,13 @@ double TransactionModel::getTotalAmount() const {
     }
     return total;
 }
+
+QList<Transaction> TransactionModel::getTransactionsByMonthYear(int month, int year) const {
+    QList<Transaction> filtered;
+    for (const Transaction& transaction : transactions) {
+        if (transaction.date.month() == month && transaction.date.year() == year) {
+            filtered.append(transaction);
+        }
+    }
+    return filtered;
+}

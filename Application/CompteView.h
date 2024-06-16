@@ -35,6 +35,7 @@ private slots:
     void showMainView();
     void addTransaction();
     void updateTotal(double total);
+    void initializeDefaultTransactions();
 };
 
 #endif // COMPTEVIEW_H

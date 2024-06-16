@@ -7,24 +7,27 @@
 #include "CompteView.h"
 #include "GraphPage.h"
 #include "TransactionManager.h"
+#include "EvolutionSolde.h"
 
 class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
+
+
         QStackedWidget* stackedWidget = new QStackedWidget;
         QListWidget* navList = new QListWidget;
 
         CompteView* comptePage = new CompteView;
-        QWidget* homePage = new QWidget;
+        EvolutionSolde* evolutionSold = new EvolutionSolde();
         TransactionManager* manager = new TransactionManager();
         GraphPage* graphPage = new GraphPage(manager);
 
         stackedWidget->addWidget(comptePage);
-        stackedWidget->addWidget(homePage);
+        stackedWidget->addWidget(evolutionSold);
         stackedWidget->addWidget(graphPage);
 
         navList->addItem("Compte");
-        navList->addItem("Home");
+        navList->addItem("Évolution Solde");
         navList->addItem("Graphiques");
 
         connect(navList, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);

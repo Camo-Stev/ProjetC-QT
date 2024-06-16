@@ -14,6 +14,8 @@ class GraphPage : public QWidget {
 public:
     explicit GraphPage(TransactionManager *manager, QWidget *parent = nullptr);
     void updateGraph();
+    void displayTransactionCount() const;
+
 
 private:
     TransactionManager *transactionManager;
@@ -22,12 +24,15 @@ private:
     QBarSet *setOut;
     QComboBox *monthComboBox;
     QComboBox *yearComboBox;
+    QLabel* transactionCountLabel;
 
     void setupUI();
-    QChart* createChart();  // Modifier pour retourner QChart*
+    QChart* createChart();
 
 public slots:
     void onMonthYearChanged();
+    void updateTransactionCount();
+
 };
 
 #endif // GRAPHPAGE_H

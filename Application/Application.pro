@@ -11,13 +11,16 @@ CONFIG += c++17
 
 SOURCES += \
     CompteView.cpp \
+    EvolutionSolde.cpp \
     GraphPage.cpp \
     RowView.cpp \
+    TransactionManager.cpp \
     TransactionModel.cpp \
     main.cpp
 
 HEADERS += \
     CompteView.h \
+    EvolutionSolde.h \
     GraphPage.h \
     RowView.h \
     TransactionManager.h \
