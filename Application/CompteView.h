@@ -16,6 +16,7 @@ class CompteView : public QWidget {
 public:
     explicit CompteView(QWidget *parent = nullptr);
     void setupUI();
+    void showInfo();
 
 private:
     TransactionModel *model;
@@ -35,6 +36,7 @@ private slots:
     void showMainView();
     void addTransaction();
     void updateTotal(double total);
+    void initializeDefaultTransactions();
 };
 
 #endif // COMPTEVIEW_H
