@@ -1,4 +1,5 @@
 QT       += core gui
+QT += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,13 +11,16 @@ CONFIG += c++17
 
 SOURCES += \
     CompteView.cpp \
+    GraphPage.cpp \
     RowView.cpp \
+    TransactionModel.cpp \
     main.cpp
 
 HEADERS += \
     CompteView.h \
+    GraphPage.h \
     RowView.h \
-    TableView.h \
+    TransactionManager.h \
     TransactionModel.h
 
 FORMS +=

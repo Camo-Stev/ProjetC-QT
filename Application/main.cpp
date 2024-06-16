@@ -1,9 +1,52 @@
 #include <QApplication>
+#include <QMainWindow>
+#include <QMenuBar>
+#include <QStackedWidget>
+#include <QListWidget>
+#include <QWidget>
 #include "CompteView.h"
+#include "GraphPage.h"
+#include "TransactionManager.h"
 
-int main(int argc, char argv[]) {
+class MainWindow : public QMainWindow {
+public:
+    MainWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
+        QStackedWidget* stackedWidget = new QStackedWidget;
+        QListWidget* navList = new QListWidget;
+
+        CompteView* comptePage = new CompteView;
+        QWidget* homePage = new QWidget;
+        TransactionManager* manager = new TransactionManager();
+        GraphPage* graphPage = new GraphPage(manager);
+
+        stackedWidget->addWidget(comptePage);
+        stackedWidget->addWidget(homePage);
+        stackedWidget->addWidget(graphPage);
+
+        navList->addItem("Compte");
+        navList->addItem("Home");
+        navList->addItem("Graphiques");
+
+        connect(navList, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
+
+        QHBoxLayout* layout = new QHBoxLayout;
+        layout->addWidget(navList, 1);
+        layout->addWidget(stackedWidget, 4);
+
+        QWidget* centralWidget = new QWidget;
+        centralWidget->setLayout(layout);
+        setCentralWidget(centralWidget);
+
+        navList->setFixedWidth(150);
+        setWindowTitle("Application de gestion");
+        resize(800, 600);
+    }
+};
+
+int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    CompteViewcompteView = new CompteView;
-    compteView->show();
+
+    MainWindow mainWindow;
+    mainWindow.show();
     return app.exec();
 }

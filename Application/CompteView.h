@@ -3,28 +3,38 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QStackedWidget>
 #include <QLabel>
 #include <QPushButton>
+#include <QLineEdit>
+#include <QDateEdit>
 #include "TransactionModel.h"
 #include "RowView.h"
 
 class CompteView : public QWidget {
     Q_OBJECT
 public:
-    explicit CompteView(QWidget parent = nullptr);
+    explicit CompteView(QWidget *parent = nullptr);
+    void setupUI();
 
 private:
-    TransactionModelmodel;
-    QVBoxLayout layout;
-    QLabeltotalLabel;
+    TransactionModel *model;
+    QStackedWidget *stackedWidget;
+    QWidget *mainView;
+    QWidget *addTransactionView;
+    QLabel *totalLabel;
     QPushButton *addButton;
+    QPushButton *backButton;
+    QLineEdit *titleInput;
+    QLineEdit *amountInput;
+    QDateEdit *dateInput;
 
-    void setupUI();
-    void addTransaction();
 
 private slots:
+    void showAddTransactionView();
+    void showMainView();
+    void addTransaction();
     void updateTotal(double total);
-    void showAddTransactionDialog();
 };
 
 #endif // COMPTEVIEW_H
