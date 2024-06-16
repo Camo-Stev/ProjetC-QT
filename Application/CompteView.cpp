@@ -1,5 +1,6 @@
 #include "CompteView.h"
 #include <QFrame>
+#include <QMessageBox>
 
 CompteView::CompteView(QWidget *parent) : QWidget(parent), model(new TransactionModel(this)) {
     stackedWidget = new QStackedWidget(this);
@@ -8,10 +9,18 @@ CompteView::CompteView(QWidget *parent) : QWidget(parent), model(new Transaction
     initializeDefaultTransactions();
     connect(model, &TransactionModel::totalUpdated, this, &CompteView::updateTotal);
 }
-
 void CompteView::setupUI() {
     mainView = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainView);
+
+    // Bouton d'information placé en haut à droite
+    QHBoxLayout *infoLayout = new QHBoxLayout();
+    QPushButton *infoButton = new QPushButton("i");
+    infoButton->setStyleSheet("font-weight: bold; font-size: 16px; width: 25px; height: 25px; border-radius: 12.5px; border: 1px solid black;");
+    connect(infoButton, &QPushButton::clicked, this, &CompteView::showInfo);
+    infoLayout->addWidget(infoButton);
+    infoLayout->addStretch();
+    mainLayout->addLayout(infoLayout);
 
     totalLabel = new QLabel("Total: 0 €", mainView);
     totalLabel->setAlignment(Qt::AlignCenter);
@@ -20,7 +29,6 @@ void CompteView::setupUI() {
     addButton = new QPushButton("Ajout", mainView);
     mainLayout->addWidget(addButton);
     connect(addButton, &QPushButton::clicked, this, &CompteView::showAddTransactionView);
-
 
     for (const auto &transaction : model->getTransactions()) {
         RowView *row = new RowView(transaction.title, transaction.amount, transaction.date.toString("dd/MM/yyyy"));
@@ -101,3 +109,7 @@ void CompteView::initializeDefaultTransactions() {
     }
 }
 
+
+void CompteView::showInfo() {
+    QMessageBox::information(this, "Informations sur la page de compte", "Cette page vous permet de gérer vos transactions. Vous pouvez ajouter et visualiser les transactions. Utilisez le bouton 'Ajout' pour ajouter une nouvelle transaction et naviguez entre les différentes transactions affichées.");
+}

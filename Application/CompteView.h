@@ -16,6 +16,7 @@ class CompteView : public QWidget {
 public:
     explicit CompteView(QWidget *parent = nullptr);
     void setupUI();
+    void showInfo();
 
 private:
     TransactionModel *model;

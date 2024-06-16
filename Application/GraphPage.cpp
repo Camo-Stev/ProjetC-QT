@@ -3,21 +3,26 @@
 #include <QHBoxLayout>
 #include <QStringList>
 
+
 GraphPage::GraphPage(TransactionManager* manager, QWidget *parent)
     : QWidget(parent), transactionManager(manager) {
     setupUI();
     connect(monthComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &GraphPage::onMonthYearChanged);
     connect(yearComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &GraphPage::onMonthYearChanged);
-    connect(transactionManager, &TransactionManager::transactionsUpdated, this, &GraphPage::updateTransactionCount);  // Connecter le signal au slot
-
-    updateTransactionCount();  // Mettre à jour le QLabel au démarrage
+    connect(transactionManager, &TransactionManager::transactionsUpdated, this, &GraphPage::updateTransactionCount);
+    updateTransactionCount();
 }
 
 void GraphPage::setupUI() {
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *hLayout = new QHBoxLayout();
 
-    // Initialiser le QLabel pour le nombre de transactions
+    QPushButton *infoButton = new QPushButton("i");
+    infoButton->setStyleSheet("font-weight: bold; font-size: 16px; width: 25px; height: 25px; border-radius: 12.5px; border: 1px solid black;");
+    connect(infoButton, &QPushButton::clicked, this, &GraphPage::showInfo);
+
+    hLayout->addWidget(infoButton, 0, Qt::AlignLeft);
+
     transactionCountLabel = new QLabel(this);
     hLayout->addWidget(transactionCountLabel);
 
@@ -62,6 +67,10 @@ QChart* GraphPage::createChart() {
     chart->createDefaultAxes();
 
     return chart;
+}
+
+void GraphPage::showInfo() {
+    QMessageBox::information(this, "Information sur le Graphique", "Ce graphique montre les transactions mensuelles. Les barres 'Entrées' et 'Sorties' représentent respectivement les revenus et les dépenses pour le mois sélectionné. Accompagné du nombre de transactions réalisées le mois en cours");
 }
 
 void GraphPage::updateGraph() {

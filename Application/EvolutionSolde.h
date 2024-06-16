@@ -8,6 +8,7 @@ class EvolutionSolde : public QWidget {
     Q_OBJECT
 public:
     explicit EvolutionSolde(QWidget *parent = nullptr);
+    void showInfo();
 
 private:
     QChartView *createChart() const;

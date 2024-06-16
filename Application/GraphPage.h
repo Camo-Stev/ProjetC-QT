@@ -15,6 +15,8 @@ public:
     explicit GraphPage(TransactionManager *manager, QWidget *parent = nullptr);
     void updateGraph();
     void displayTransactionCount() const;
+    void showInfo();
+
 
 
 private:
